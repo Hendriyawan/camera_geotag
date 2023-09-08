@@ -19,12 +19,14 @@ Flutter Camera Geotag, use RepaintBoundary to save Image file to storage
 add this line
 ```dart
 <key>NSCameraUsageDescription</key>
-	<string>Application need permission to camera</string>
+<string>Application need permission to camera</string>
 ```
-```dart<key>NSMicrophoneUsageDescription</key>
-	<string>Application need permission to microphone</string>
+```dart
+<key>NSMicrophoneUsageDescription</key>
+<string>Application need permission to microphone</string>
 ```
-```dart<key>NSLocationWhenInUseUsageDescription</key>
+```dart
+<key>NSLocationWhenInUseUsageDescription</key>
 <string>Need location to camera location</string>
 ```
 
