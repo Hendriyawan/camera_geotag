@@ -1,6 +1,4 @@
 // ignore_for_file: use_build_context_synchronously
-import 'dart:io';
-
 import 'package:camera/camera.dart';
 import 'package:camera_locate/page/camera/circular_progress_dialog.dart';
 import 'package:camera_locate/page/camera/display_result_page.dart';

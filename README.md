@@ -76,5 +76,7 @@ class MyApp extends StatelessWidget {
 }
 ```
 
+* You can see more implementation code examples in the lib folder of this project, good luck
+
 <img src="https://raw.githubusercontent.com/Hendriyawan/camera_geotag/master/ss1.jpg" width="360"/>
 <img src="https://raw.githubusercontent.com/Hendriyawan/camera_geotag/master/ss2.jpg" width="360"/>
