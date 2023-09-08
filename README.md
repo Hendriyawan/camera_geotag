@@ -3,12 +3,15 @@
 Flutter Camera Geotag, use RepaintBoundary to save Image file to storage
 
 
-* setup camera, permission_handler, google_fonts  plugin to your project, ```flutter pub add camera permission_handler google_fonts```
+* setup camera, permission_handler, google_fonts, geolocator, geocoding  plugin to your project, ```flutter pub add camera permission_handler google_fonts geolocator geocoding```
 ## ANDROID SETUP
 * change minSdkVersion to 21
 *  add this permission to your AndroidManifest.xml
 ```dart
 <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+```
+```dart
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 ```
 
 
