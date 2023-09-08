@@ -39,11 +39,9 @@ dependencies:
   path_provider: ^2.1.1
   path: ^1.8.3
   permission_handler: ^10.4.5
-  image: ^4.0.17
   geolocator: ^10.0.1
   geocoding: ^2.1.0
   intl: ^0.18.1
-  photo_view: ^0.14.0
   google_fonts: ^5.1.0
 
 dev_dependencies:

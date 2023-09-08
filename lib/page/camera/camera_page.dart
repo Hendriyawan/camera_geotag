@@ -7,12 +7,8 @@ import 'package:camera_locate/page/camera/display_result_page.dart';
 import 'package:camera_locate/util/utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:image/image.dart' as img;
-import 'package:intl/intl.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class CameraPage extends StatefulWidget {
@@ -28,22 +24,6 @@ class _CameraPageState extends State<CameraPage> {
   String _watermarkText = '';
   double _lat = 0.0;
   double _long = 0.0;
-  int xValue = 0;
-  int yValue = 0;
-
-  void getPosition() {
-    // Find the render object of the widget
-    RenderBox renderBox = context.findRenderObject() as RenderBox;
-
-    // Get the local position of the widget
-    Offset localPosition = renderBox.localToGlobal(Offset.zero);
-
-    // Set the integer X and Y values
-    setState(() {
-      xValue = localPosition.dx.toInt();
-      yValue = localPosition.dy.toInt();
-    });
-  }
 
   ///This function to get location from the devices
   ///latitude, longitude, from this data we can extract the address information
@@ -83,93 +63,93 @@ class _CameraPageState extends State<CameraPage> {
   ///
   /// START : UNUSED FUNCTION
   ///
-  Future<File> copyAssetToFile(String assetPath) async {
-    final ByteData data = await rootBundle.load(assetPath);
-    final List<int> bytes = data.buffer.asUint8List();
-    final Directory tempDir = await getTemporaryDirectory();
-    final File tempFile = File('${tempDir.path}/temp_image.png');
-    await tempFile.writeAsBytes(bytes, flush: true);
-    return tempFile;
-  }
+  // Future<File> copyAssetToFile(String assetPath) async {
+  //   final ByteData data = await rootBundle.load(assetPath);
+  //   final List<int> bytes = data.buffer.asUint8List();
+  //   final Directory tempDir = await getTemporaryDirectory();
+  //   final File tempFile = File('${tempDir.path}/temp_image.png');
+  //   await tempFile.writeAsBytes(bytes, flush: true);
+  //   return tempFile;
+  // }
 
-  Future<void> addWaterMark(String imagePath) async {
-    try {
-      final File imageFile = File(imagePath);
-      if (!imageFile.existsSync()) {
-        // Handle if the image file doesn't exist
-        return;
-      }
-      // Load the image
-      final img.Image? image = img.decodeImage(imageFile.readAsBytesSync());
-      if (image == null) {
-        // Handle if the image cannot be decoded
-        return;
-      }
-      var time = DateFormat('yyyy/dd/MM HH:ss').format(
-        DateTime.now(),
-      );
-      // Read a jpeg image from file.
-      var file = await copyAssetToFile('assets/image/logo.png');
-      final srcImage = img.decodeJpg(file.readAsBytesSync());
-      // Calculate the Y position for the watermark below the image
-      int watermarkY = image.height; // Adjust the offset as needed
-      img.compositeImage(
-        image,
-        srcImage!,
-        dstW: 150,
-        dstH: 150,
-        dstX: 10,
-        dstY: watermarkY - 200, // Adjust the offset as needed
-      );
-      img.drawString(
-        image,
-        'Lat $_lat, Long $_long',
-        font: img.arial24,
-        x: 200,
-        y: watermarkY - 200,
-        wrap: true,
-      );
-      img.drawString(
-        image,
-        _watermarkText,
-        font: img.arial24,
-        x: 200,
-        maskChannel: img.Channel.green,
-        y: watermarkY - 160, // Add vertical spacing between watermark elements
-      );
-      img.drawString(
-        image,
-        time,
-        font: img.arial24,
-        x: 200,
-        y: watermarkY - 110, // Add vertical spacing between watermark elements
-        wrap: true,
-      );
+  // Future<void> addWaterMark(String imagePath) async {
+  //   try {
+  //     final File imageFile = File(imagePath);
+  //     if (!imageFile.existsSync()) {
+  //       // Handle if the image file doesn't exist
+  //       return;
+  //     }
+  //     // Load the image
+  //     final img.Image? image = img.decodeImage(imageFile.readAsBytesSync());
+  //     if (image == null) {
+  //       // Handle if the image cannot be decoded
+  //       return;
+  //     }
+  //     var time = DateFormat('yyyy/dd/MM HH:ss').format(
+  //       DateTime.now(),
+  //     );
+  //     // Read a jpeg image from file.
+  //     var file = await copyAssetToFile('assets/image/logo.png');
+  //     final srcImage = img.decodeJpg(file.readAsBytesSync());
+  //     // Calculate the Y position for the watermark below the image
+  //     int watermarkY = image.height; // Adjust the offset as needed
+  //     img.compositeImage(
+  //       image,
+  //       srcImage!,
+  //       dstW: 150,
+  //       dstH: 150,
+  //       dstX: 10,
+  //       dstY: watermarkY - 200, // Adjust the offset as needed
+  //     );
+  //     img.drawString(
+  //       image,
+  //       'Lat $_lat, Long $_long',
+  //       font: img.arial24,
+  //       x: 200,
+  //       y: watermarkY - 200,
+  //       wrap: true,
+  //     );
+  //     img.drawString(
+  //       image,
+  //       _watermarkText,
+  //       font: img.arial24,
+  //       x: 200,
+  //       maskChannel: img.Channel.green,
+  //       y: watermarkY - 160, // Add vertical spacing between watermark elements
+  //     );
+  //     img.drawString(
+  //       image,
+  //       time,
+  //       font: img.arial24,
+  //       x: 200,
+  //       y: watermarkY - 110, // Add vertical spacing between watermark elements
+  //       wrap: true,
+  //     );
 
-      // Get the path to the internal storage
-      final Directory? outputDir = await getExternalStorageDirectory();
-      final String dir = outputDir?.path ?? '/storage/emulated/0';
-      // Define a new path for the image with watermark in internal storage
-      var filename = "${DateFormat("yyyyMMddHHss").format(DateTime.now())}.jpg";
-      final String newImagePath = '$dir/$filename';
-      // Save the image with watermark to internal storage
-      File(newImagePath).writeAsBytesSync(img.encodePng(image));
-      if (!mounted) return;
-      await Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => DisplayResultPage(
-            imagePath: newImagePath,
-          ),
-        ),
-      );
-    } catch (e) {
-      rethrow;
-    }
-  }
+  //     // Get the path to the internal storage
+  //     final Directory? outputDir = await getExternalStorageDirectory();
+  //     final String dir = outputDir?.path ?? '/storage/emulated/0';
+  //     // Define a new path for the image with watermark in internal storage
+  //     var filename = "${DateFormat("yyyyMMddHHss").format(DateTime.now())}.jpg";
+  //     final String newImagePath = '$dir/$filename';
+  //     // Save the image with watermark to internal storage
+  //     File(newImagePath).writeAsBytesSync(img.encodePng(image));
+  //     if (!mounted) return;
+  //     await Navigator.of(context).push(
+  //       MaterialPageRoute(
+  //         builder: (context) => DisplayResultPage(
+  //           imagePath: newImagePath,
+  //         ),
+  //       ),
+  //     );
+  //   } catch (e) {
+  //     rethrow;
+  //   }
+  // }
 
-  ///
-  /// END : UNUSED FUNCTION
-  ///
+  // ///
+  // /// END : UNUSED FUNCTION
+  // ///
 
   ///This function to take a picture from camera
   Future<void> takePicture() async {
@@ -211,10 +191,6 @@ class _CameraPageState extends State<CameraPage> {
   @override
   void initState() {
     super.initState();
-    // Call this function after the widget is built
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      getPosition();
-    });
     checkPermission(
       Permission.location,
       (granted) {
