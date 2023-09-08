@@ -8,8 +8,8 @@ Flutter Camera Geotag, use RepaintBoundary to save Image file to storage
 * change minSdkVersion to 21
 *  add this permission to your AndroidManifest.xml
 ```dart
-<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>``` <br>
-```<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />``` <br>
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+```
 
 
 <img src="https://raw.githubusercontent.com/Hendriyawan/camera_geotag/master/ss1.jpg" width="360"/>
